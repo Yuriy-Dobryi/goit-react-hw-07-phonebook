@@ -6,7 +6,7 @@ import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 import { fetchContacts } from 'redux/operations';
 // import { setDefaultContacts } from "redux/contactsSlice";
-import { DEFAULT_CONTACTS } from 'redux/constants';
+// import { DEFAULT_CONTACTS } from 'redux/constants';
 
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from "./Filter/Filter";
@@ -26,13 +26,13 @@ export function App() {
     dispatch(fetchContacts());
   }, [dispatch]);
 
-  // useEffect(() => {
-  //   const isContactsEmpty = contacts.length === 0;
+  useEffect(() => {
+    const isContactsEmpty = contacts.length === 0;
 
-  //   if (isContactsEmpty) {
-  //     dispatch(setFilter(''));
-  //   }
-  // }, [contacts, dispatch]);
+    if (isContactsEmpty) {
+      dispatch(setFilter(''));
+    }
+  }, [contacts, dispatch]);
 
   return (
     <div className="container">

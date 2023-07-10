@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import PropTypes from 'prop-types';
 
@@ -8,8 +8,8 @@ import styles from './ContactList.module.css';
 
 export default function ContactItem({ contact: { id, name, number } }) {
   const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
-  
+  // const dispatch = useDispatch();
+
   function removeContactHandle(id, name) {
     Notify.success(`${name} has been removed`);
     if (contacts.length - 1 === 0) {
