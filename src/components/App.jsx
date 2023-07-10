@@ -26,7 +26,6 @@ export function App() {
 
   useEffect(() => {
     const isContactsEmpty = contacts.length === 0;
-
     if (isContactsEmpty) {
       dispatch(setFilter(''));
     }
