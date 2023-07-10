@@ -5,9 +5,11 @@
   column-gap: 30px;
   margin-bottom: 20px;
   padding: 10px;
+  background-color: #fff2e1;
   font-size: 20px;
   font-style: oblique;
   border: 1px solid black;
+  border-radius: 10px;
 }
 
 .info {

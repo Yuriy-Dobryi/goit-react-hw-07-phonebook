@@ -14,3 +14,27 @@ export const fetchContacts = createAsyncThunk(
     }
   }
 );
+
+export const addContact = createAsyncThunk(
+  'contacts/addContact',
+  async (newContact, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(`/contacts`, newContact);
+      return response.data;
+    } catch {
+      return rejectWithValue('Something went wrong, try again');
+    }
+  }
+);
+
+export const deleteContact = createAsyncThunk(
+  'contacts/deleteContact',
+  async (contactId, { rejectWithValue }) => {
+    try {
+      const response = await axios.delete(`/contacts/${contactId}`);
+      return response.data;
+    } catch {
+      return rejectWithValue('Something went wrong, try again');
+    }
+  }
+);

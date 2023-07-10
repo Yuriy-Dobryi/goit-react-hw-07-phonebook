@@ -1,12 +1,10 @@
 import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import BeatLoader from 'react-spinners/BeatLoader';
+import ClipLoader from 'react-spinners/ClipLoader';
 
 import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 import { fetchContacts } from 'redux/operations';
-// import { setDefaultContacts } from "redux/contactsSlice";
-// import { DEFAULT_CONTACTS } from 'redux/constants';
 
 import { ContactForm } from "./ContactForm/ContactForm";
 import { Filter } from "./Filter/Filter";
@@ -14,12 +12,12 @@ import ContactList from "./ContactList/ContactList";
 import styles from './App.module.css'
 
 const override = {
-  display: 'flex',
-  justifyContent: 'center',
+  display: 'block',
+  margin: '0 auto 20px',
 };
 
 export function App() {
-  const { contacts, isLoading, error } = useSelector(selectContacts);
+  const { contacts, isLoading } = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -42,32 +40,24 @@ export function App() {
       </div>
 
       <div>
-        <h2 className={styles.title}>Contacts</h2>
-        <BeatLoader
+        <h2 className={styles.title}>Contacts:</h2>
+        <ClipLoader
           loading={isLoading}
           cssOverride={override}
-          size={24}
-          color={`#EA6DB1`}
+          size={36}
+          color={`#fff2e1`}
           aria-label="Loading Spinner"
         />
 
         {contacts.length > 0 && (
           <>
-            <Filter />
+            {!isLoading && <Filter />}
             <ContactList />
           </>
         )}
 
-        {error && (
-          <>
-            <p>There is no contacts</p>
-            <button
-              className={styles.btn}
-              // onClick={() => dispatch(setDefaultContacts(DEFAULT_CONTACTS))}
-            >
-              Default Contacts
-            </button>
-          </>
+        {contacts.length === 0 && !isLoading && (
+          <p>There are no contacts🧐</p>
         )}
       </div>
     </div>

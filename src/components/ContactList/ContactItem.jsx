@@ -1,21 +1,21 @@
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import PropTypes from 'prop-types';
 
 import { selectContacts } from 'redux/selectors';
-// import { removeContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 import styles from './ContactList.module.css';
 
 export default function ContactItem({ contact: { id, name, number } }) {
-  const contacts = useSelector(selectContacts);
-  // const dispatch = useDispatch();
+  const { contacts } = useSelector(selectContacts);
+  const dispatch = useDispatch();
 
   function removeContactHandle(id, name) {
     Notify.success(`${name} has been removed`);
     if (contacts.length - 1 === 0) {
       Notify.info('You deleted all contacts🙄');
     }
-    // dispatch(removeContact(id));
+    dispatch(deleteContact(id));
   }
 
   return (

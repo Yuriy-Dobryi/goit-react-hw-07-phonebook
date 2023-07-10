@@ -1,6 +1,7 @@
 @import-normalize;
 
 body {
+  background-color: rgb(129 153 187);
   font-family: sans-serif;
   line-height: 1.5;
 }
