@@ -1,9 +1,11 @@
-import { useState, useEffect } from "react";
+import { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import BeatLoader from 'react-spinners/BeatLoader';
 
 import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
-import { setDefaultContacts } from "redux/contactsSlice";
+import { getContacts } from 'redux/operations';
+// import { setDefaultContacts } from "redux/contactsSlice";
 import { DEFAULT_CONTACTS } from 'redux/constants';
 
 import { ContactForm } from "./ContactForm/ContactForm";
@@ -11,22 +13,26 @@ import { Filter } from "./Filter/Filter";
 import ContactList from "./ContactList/ContactList";
 import styles from './App.module.css'
 
-export function App() {
-  const [status, setStatus] = useState('idle');
-  const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
-  
-  useEffect(() => { 
-    setStatus('pending');
-    const isContactsEmpty = contacts.length === 0;
+const override = {
+  display: 'flex',
+  justifyContent: 'center',
+};
 
-    if (isContactsEmpty) {
-      setStatus('rejected');
-      dispatch(setFilter(''));
-    } else {
-      setStatus('resolved');
-    }
-  }, [contacts, dispatch]);
+export function App() {
+  const { contacts, isLoading, error } = useSelector(selectContacts);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getContacts());
+  }, [dispatch]);
+
+  // useEffect(() => {
+  //   const isContactsEmpty = contacts.length === 0;
+
+  //   if (isContactsEmpty) {
+  //     dispatch(setFilter(''));
+  //   }
+  // }, [contacts, dispatch]);
 
   return (
     <div className="container">
@@ -37,19 +43,27 @@ export function App() {
 
       <div>
         <h2 className={styles.title}>Contacts</h2>
-        {status === 'resolved' && (
+        <BeatLoader
+          loading={isLoading}
+          cssOverride={override}
+          size={24}
+          color={`#EA6DB1`}
+          aria-label="Loading Spinner"
+        />
+
+        {contacts.length > 0 && (
           <>
             <Filter />
             <ContactList />
           </>
         )}
 
-        {status === 'rejected' && (
+        {error && (
           <>
             <p>There is no contacts</p>
             <button
               className={styles.btn}
-              onClick={() => dispatch(setDefaultContacts(DEFAULT_CONTACTS))}
+              // onClick={() => dispatch(setDefaultContacts(DEFAULT_CONTACTS))}
             >
               Default Contacts
             </button>

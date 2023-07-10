@@ -3,7 +3,7 @@ import { Notify } from 'notiflix';
 import PropTypes from 'prop-types';
 
 import { selectContacts } from 'redux/selectors';
-import { removeContact } from 'redux/contactsSlice';
+// import { removeContact } from 'redux/contactsSlice';
 import styles from './ContactList.module.css';
 
 export default function ContactItem({ contact: { id, name, number } }) {
@@ -15,14 +15,13 @@ export default function ContactItem({ contact: { id, name, number } }) {
     if (contacts.length - 1 === 0) {
       Notify.info('You deleted all contacts🙄');
     }
-    dispatch(removeContact(id));
+    // dispatch(removeContact(id));
   }
 
   return (
     <li className={styles.item}>
-      <p className={styles.info}>
-        {name}: {number}
-      </p>
+      <p className={styles.info}>{name}</p>
+      <p className={styles.info}>{number}</p>
       <button
         className={styles.btn}
         onClick={() => removeContactHandle(id, name)}

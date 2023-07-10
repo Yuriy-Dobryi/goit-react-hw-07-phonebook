@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 
 import { selectContacts } from 'redux/selectors';
-import { addContact } from 'redux/contactsSlice';
+// import { addContact } from 'redux/contactsSlice';
 import styles from '../App.module.css';
 
 export function ContactForm() {
@@ -21,7 +21,7 @@ export function ContactForm() {
       Notify.failure(`${newContact.name} is already in your contacts.🧐`);
       return;
     }
-    dispatch(addContact(newContact));
+    // dispatch(addContact(newContact));
     Notify.success(`${newContact.name} has been added`);
     e.target.reset();
   }

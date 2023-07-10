@@ -1,9 +1,13 @@
-export const selectContacts = state => state.contacts.list;
+export const selectContacts = state => ({
+  contacts: state.contacts.list,
+  isLoading: state.contacts.isLoading,
+  error: state.contacts.error,
+});
 
 export const selectFilter = state => state.filter;
 
 export const selectFilteredContacts = state => {
-  const contacts = selectContacts(state);
+  const { contacts } = selectContacts(state);
   const filter = selectFilter(state);
 
   if (filter) {
