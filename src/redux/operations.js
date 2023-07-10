@@ -1,14 +1,16 @@
 import axios from 'axios';
-import { fetchingError, fetchingInProgress, fetchingSuccess } from './contactsSlice';
-
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
 axios.defaults.baseURL = 'https://64abdf529edb4181202eb5c6.mockapi.io';
-export const getContacts = () => async dispatch => {
-  try {
-    dispatch(fetchingInProgress());
-    const response = await axios.get('/contacts');
-    dispatch(fetchingSuccess(response.data));
-  } catch (error) {
-    dispatch(fetchingError(error.message));
+
+export const fetchContacts = createAsyncThunk(
+  'contacts/fetchContacts',
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get('/contacts');
+      return response.data;
+    } catch {
+      return rejectWithValue('Something went wrong, try again');
+    }
   }
-}
+);

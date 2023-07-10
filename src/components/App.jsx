@@ -4,7 +4,7 @@ import BeatLoader from 'react-spinners/BeatLoader';
 
 import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
-import { getContacts } from 'redux/operations';
+import { fetchContacts } from 'redux/operations';
 // import { setDefaultContacts } from "redux/contactsSlice";
 import { DEFAULT_CONTACTS } from 'redux/constants';
 
@@ -23,7 +23,7 @@ export function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getContacts());
+    dispatch(fetchContacts());
   }, [dispatch]);
 
   // useEffect(() => {
