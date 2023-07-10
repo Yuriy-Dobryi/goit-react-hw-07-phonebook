@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 
-import { getContacts } from 'redux/selectors';
+import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 import { setDefaultContacts } from "redux/contactsSlice";
 import { DEFAULT_CONTACTS } from 'redux/constants';
@@ -13,7 +13,7 @@ import styles from './App.module.css'
 
 export function App() {
   const [status, setStatus] = useState('idle');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
   
   useEffect(() => { 
