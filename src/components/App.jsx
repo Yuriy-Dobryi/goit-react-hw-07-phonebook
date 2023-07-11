@@ -6,12 +6,12 @@ import { selectContacts } from 'redux/selectors';
 import { setFilter } from 'redux/filterSlice';
 import { fetchContacts } from 'redux/operations';
 
-import { ContactForm } from "./ContactForm/ContactForm";
-import { Filter } from "./Filter/Filter";
-import ContactList from "./ContactList/ContactList";
-import styles from './App.module.css'
+import { ContactForm } from './ContactForm/ContactForm';
+import { Filter } from './Filter/Filter';
+import ContactList from './ContactList/ContactList';
+import styles from './App.module.css';
 
-const override = {
+const spinWrapper = {
   display: 'block',
   margin: '0 auto 20px',
 };
@@ -42,21 +42,19 @@ export function App() {
         <h2 className={styles.title}>Contacts:</h2>
         <ClipLoader
           loading={isLoading}
-          cssOverride={override}
+          cssOverride={spinWrapper}
           size={36}
           color={`#fff2e1`}
           aria-label="Loading Spinner"
         />
 
-        {contacts.length > 0 && (
+        {contacts.length > 0 ? (
           <>
             {!isLoading && <Filter />}
             <ContactList />
           </>
-        )}
-
-        {contacts.length === 0 && !isLoading && (
-          <p>There are no contacts🧐</p>
+        ) : (
+          !isLoading && <p>There are no contacts🧐</p>
         )}
       </div>
     </div>
