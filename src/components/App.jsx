@@ -5,15 +5,10 @@ import ClipLoader from 'react-spinners/ClipLoader';
 import { useFetchContactsQuery } from 'redux/phoneBookApi';
 import { setFilter } from 'redux/filterSlice';
 
-import { ContactForm } from './ContactForm/ContactForm';
-import { Filter } from './Filter/Filter';
+import ContactForm from './ContactForm/ContactForm';
+import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import styles from './App.module.css';
-
-const spinWrapper = {
-  display: 'block',
-  margin: '0 auto 20px',
-};
 
 export function App() {
   const { data: contacts, isFetching: isLoading, isSuccess } = useFetchContactsQuery();
@@ -54,3 +49,8 @@ export function App() {
     </div>
   );
 }
+
+const spinWrapper = {
+  display: 'block',
+  margin: '0 auto 20px',
+};

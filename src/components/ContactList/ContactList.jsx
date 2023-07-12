@@ -1,5 +1,6 @@
 import { Notify } from 'notiflix';
 import { useSelector } from 'react-redux';
+
 import { phoneBookApi } from 'redux/phoneBookApi';
 import { selectFilter, getFilteredContacts } from 'redux/selectors';
 import ContactItem from './ContactItem';

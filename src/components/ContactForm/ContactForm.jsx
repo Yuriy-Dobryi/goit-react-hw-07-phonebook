@@ -1,12 +1,12 @@
-import { useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 
-import { addContact } from 'redux/operations';
+import { phoneBookApi, useAddContactMutation } from 'redux/phoneBookApi';
 import styles from '../App.module.css';
 
-export function ContactForm() {
-  const dispatch = useDispatch();
-  const { contacts } = [];
+export default function ContactForm() {
+  const { data: contacts } =
+    phoneBookApi.endpoints.fetchContacts.useQueryState();
+  const [addContact] = useAddContactMutation();
 
   function submitClick(e) {
     e.preventDefault();
@@ -15,13 +15,12 @@ export function ContactForm() {
 
     const isNameExist = contacts.some(contact => contact.name.toLowerCase() === newContact.name.toLowerCase()
     );
-    
     if (isNameExist) {
       Notify.failure(`${newContact.name} is already in your contacts.🧐`);
       return;
     }
 
-    dispatch(addContact(newContact));
+    addContact(newContact);
     Notify.success(`${newContact.name} has been added`);
     e.target.reset();
   }

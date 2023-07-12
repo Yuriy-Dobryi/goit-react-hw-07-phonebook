@@ -30,4 +30,4 @@ export const phoneBookApi = createApi({
   }),
 });
 
-export const { useFetchContactsQuery, useDeleteContactMutation } = phoneBookApi;
+export const { useFetchContactsQuery, useAddContactMutation,useDeleteContactMutation } = phoneBookApi;

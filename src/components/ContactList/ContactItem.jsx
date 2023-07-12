@@ -7,7 +7,7 @@ import styles from './ContactList.module.css';
 export default function ContactItem({ contact: { id, name, number } }) {
   const { data: contacts } =
     phoneBookApi.endpoints.fetchContacts.useQueryState();
-  const [deleteContact] = useDeleteContactMutation();
+  const [deleteContact, { isLoading: isDeleting }] = useDeleteContactMutation();
 
   function removeContactHandle(id, name) {
     Notify.success(`${name} has been removed`);
@@ -24,6 +24,7 @@ export default function ContactItem({ contact: { id, name, number } }) {
       <button
         className={styles.btn}
         onClick={() => removeContactHandle(id, name)}
+        disabled={isDeleting}
       >
         Delete
       </button>
