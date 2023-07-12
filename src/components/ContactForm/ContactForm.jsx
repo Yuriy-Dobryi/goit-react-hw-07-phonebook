@@ -1,13 +1,12 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Notify } from 'notiflix';
 
-import { selectContacts } from 'redux/selectors';
 import { addContact } from 'redux/operations';
 import styles from '../App.module.css';
 
 export function ContactForm() {
   const dispatch = useDispatch();
-  const { contacts } = useSelector(selectContacts);
+  const { contacts } = [];
 
   function submitClick(e) {
     e.preventDefault();

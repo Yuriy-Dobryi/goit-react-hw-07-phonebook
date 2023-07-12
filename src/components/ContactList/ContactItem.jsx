@@ -1,21 +1,20 @@
-import { useDispatch, useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
 import PropTypes from 'prop-types';
 
-import { selectContacts } from 'redux/selectors';
-import { deleteContact } from 'redux/operations';
+import { phoneBookApi, useDeleteContactMutation } from 'redux/phoneBookApi';
 import styles from './ContactList.module.css';
 
 export default function ContactItem({ contact: { id, name, number } }) {
-  const { contacts } = useSelector(selectContacts);
-  const dispatch = useDispatch();
+  const { data: contacts } =
+    phoneBookApi.endpoints.fetchContacts.useQueryState();
+  const [deleteContact] = useDeleteContactMutation();
 
   function removeContactHandle(id, name) {
     Notify.success(`${name} has been removed`);
     if (contacts.length - 1 === 0) {
       Notify.info('You deleted all contacts🙄');
     }
-    dispatch(deleteContact(id));
+    deleteContact(id);
   }
 
   return (

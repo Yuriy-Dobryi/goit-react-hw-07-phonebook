@@ -1,18 +1,21 @@
-import { useSelector } from 'react-redux';
 import { Notify } from 'notiflix';
-
-import { selectFilteredContacts } from 'redux/selectors';
+import { useSelector } from 'react-redux';
+import { phoneBookApi } from 'redux/phoneBookApi';
+import { selectFilter, getFilteredContacts } from 'redux/selectors';
 import ContactItem from './ContactItem';
 
 export default function ContactList() {
-  const contacts = useSelector(selectFilteredContacts);
-  if (contacts.length === 0) {
+  const { data: contacts } = phoneBookApi.endpoints.fetchContacts.useQueryState();
+  const filter = useSelector(selectFilter)
+
+  const filteredContacts = getFilteredContacts(contacts, filter);
+  if (filteredContacts.length === 0) {
     Notify.info('No contacts with this name🤔');
   }
   
   return (
     <ul>
-      {contacts.map(contact => (
+      {filteredContacts.map(contact => (
         <ContactItem key={contact.id} contact={contact} />
       ))}
     </ul>

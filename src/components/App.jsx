@@ -1,10 +1,9 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
 
-import { selectContacts } from 'redux/selectors';
+import { useFetchContactsQuery } from 'redux/phoneBookApi';
 import { setFilter } from 'redux/filterSlice';
-import { fetchContacts } from 'redux/operations';
 
 import { ContactForm } from './ContactForm/ContactForm';
 import { Filter } from './Filter/Filter';
@@ -17,19 +16,14 @@ const spinWrapper = {
 };
 
 export function App() {
-  const { contacts, isLoading } = useSelector(selectContacts);
+  const { data: contacts, isFetching: isLoading, isSuccess } = useFetchContactsQuery();
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  useEffect(() => {
-    const isContactsEmpty = contacts.length === 0;
-    if (isContactsEmpty) {
+    if (isSuccess && contacts.length === 0) {
       dispatch(setFilter(''));
     }
-  }, [contacts, dispatch]);
+  }, [contacts, isSuccess, dispatch]);
 
   return (
     <div className="container">
@@ -48,7 +42,7 @@ export function App() {
           aria-label="Loading Spinner"
         />
 
-        {contacts.length > 0 ? (
+        {isSuccess && contacts.length > 0 ? (
           <>
             {!isLoading && <Filter />}
             <ContactList />
