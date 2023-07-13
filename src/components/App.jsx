@@ -1,24 +1,16 @@
-import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
 import ClipLoader from 'react-spinners/ClipLoader';
-
 import { useFetchContactsQuery } from 'redux/phoneBookApi';
-import { setFilter } from 'redux/filterSlice';
-
 import ContactForm from './ContactForm/ContactForm';
 import Filter from './Filter/Filter';
 import ContactList from './ContactList/ContactList';
 import styles from './App.module.css';
 
 export function App() {
-  const { data: contacts, isFetching: isLoading, isSuccess } = useFetchContactsQuery();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    if (isSuccess && contacts.length === 0) {
-      dispatch(setFilter(''));
-    }
-  }, [contacts, isSuccess, dispatch]);
+  const {
+    data: contacts,
+    isFetching: isLoading,
+    isSuccess,
+  } = useFetchContactsQuery();
 
   return (
     <div className="container">
